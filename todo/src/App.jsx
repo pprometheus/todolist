@@ -78,7 +78,7 @@ function App() {
 
               <div className="group relative pl-38 ">
                 <button
-                  className={item.status ? " bg-blue-500" : " bg-green-500"}
+                  className={`${item.status ? " bg-blue-500" : " bg-green-500"}
                   border-1
                   px-2
                   py-1
@@ -87,7 +87,7 @@ function App() {
                   ml-11
                   hover:cursor-pointer
                   invisible
-                  group-hover:visible
+                  group-hover:visible`}
                   onClick={() => {
                     doneTask(idx);
                   }}
