@@ -1,10 +1,11 @@
-import React, { children } from "react";
+import React from "react";
 
-const Button = ({ children, className, onClick }) => {
+const Button = ({ children, className, onClick, disabled=false }) => {
   return (
     <button
-      className={`px-4 py-2 rounded hover: cursor-pointer ${className}`}
+      className={`px-4 py-2 rounded hover:cursor-pointer ${className}`}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>
