@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Button from "../src/components/button/Button"
-import Input from "../src/components/input/Input"
-import Card from "../src/components/card/Card"
-import Header from "../src/components/header/Header"
+import Button from "../src/components/button/Button";
+import Input from "../src/components/input/Input";
+import Card from "../src/components/card/Card";
+import Header from "../src/components/header/Header";
 
 function App() {
   const [task, setTask] = useState(""); //false is boolean
@@ -49,29 +49,24 @@ function App() {
 
   return (
     <>
+      <Header title={"TODO List"} className={"justify-center flex"} />
       <div className="items-center justify-center flex">
-        <div className="mt-6">
-          <h1 className="text-4xl mb-2"> TODO List</h1>
-
-          <input
-            className="border-1 p-2"
-            type="text"
-            name=""
-            id=""
-            value={task}
-            placeholder="Enter task"
-            onChange={handleChange}
-          />
-          <button
-            className="border-1 rounded-sm bg-yellow-500 text-white border-gray-500 p-2 hover:cursor-pointer ml-2"
-            onClick={addTask}
-          >
-            Add
-          </button>
-        </div>
+      <Input
+        placeholder={"Enter Task"}
+        value={task}
+        onChange={handleChange}
+        className={"border-1 p-2"}
+      />
+      <Button
+        onClick={addTask}
+        className={
+          "border-1 rounded-sm bg-yellow-500 text-white border-gray-500 p-2 hover:cursor-pointer ml-2" 
+        }
+        children={"Add"}
+      />
       </div>
-
-      <div className="justify-center items-center w-[40%] ml-auto mr-auto mt-2 px-6 ">
+    <div className="flex justify-center items-center"> 
+    <Card className={"border-0 shadow-none"}>
         {taskList.map((item, idx) => (
           <ul key={idx} className="">
             <li className="py-2  shadow-lg bg-blue-300 px-4 rounded-sm mb-2 flex justify-between">
@@ -81,7 +76,7 @@ function App() {
               </div>
 
               <div className="group relative pl-38 ">
-                <button
+                <Button
                   className={`${item.status ? " bg-blue-500" : " bg-green-500"}
                   border-1
                   px-2
@@ -95,22 +90,24 @@ function App() {
                   onClick={() => {
                     doneTask(idx);
                   }}
-                >
-                  {item.status == true ? "Undo" : "Done"}
-                </button>
-                <button
-                  className="border-1 px-2 py-1 bg-red-500 text-white rounded-lg ml-2 hover:cursor-pointer invisible group-hover:visible"
+                  children={item.status == true ? "Undo" : "Done"}
+                />
+                <Button
+                  className={
+                    "border-1 px-2 py-1 bg-red-500 text-white rounded-lg ml-2 hover:cursor-pointer invisible group-hover:visible"
+                  }
                   onClick={() => {
                     deleteTask(idx);
                   }}
-                >
-                  Remove
-                </button>
+                  children={"Remove"}
+                />
               </div>
             </li>
           </ul>
         ))}
-      </div>
+      </Card>
+    </div>
+      
     </>
   );
 }
