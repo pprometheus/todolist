@@ -1,47 +1,30 @@
 import { useState } from "react";
+import { toggleTaskStatus ,addTask,deleteTask} from "./redux/actions/action";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
-  const [task, setTask] = useState(""); //false is boolean
-  const [taskList, setTasklist] = useState([]);
+  const [task, setTask] = useState("");
+  const dispatch=useDispatch();
 
-  function addTask() {
-    // const completed = "false";
+  function addTaskfun() {
     if (task != "") {
-      //task.task we are checking task -> object
-      setTasklist((prevTask) => [
-        ...prevTask,
-        {
-          taskName: task,
-          status: false,
-        },
-      ]);
-      setTask(""); //setting the object to empty string ?? revert to original state or null
+      dispatch(addTask(task));
+      setTask("");
     }
   }
-
-  console.log("Task", taskList);
-
-  // console.log(taskList);
-  // console.log(task);
 
   function handleChange(e) {
     setTask(e.target.value);
   }
 
-  function deleteTask(taskid) {
-    // console.log(taskid);
-    const filteredTasks = taskList.filter((_, id) => id !== taskid);
-    setTasklist(filteredTasks);
-    // console.log(taskList);
+  function deleteTaskfun(taskid) {
+    dispatch(deleteTask(taskid))
   }
 
   function doneTask(taskid) {
-    setTasklist((prevTasks) =>
-      prevTasks.map((task, idx) =>
-        idx === taskid ? { ...task, status: !task.status } : task
-      )
-    );
+    dispatch(toggleTaskStatus(taskid));
   }
+  const taskList=useSelector((state)=>state?.tasks?.taskList);
 
   return (
     <>
@@ -60,7 +43,7 @@ function App() {
           />
           <button
             className="border-1 rounded-sm bg-yellow-500 text-white border-gray-500 p-2 hover:cursor-pointer ml-2"
-            onClick={addTask}
+            onClick={addTaskfun}
           >
             Add
           </button>
@@ -68,7 +51,7 @@ function App() {
       </div>
 
       <div className="justify-center items-center w-[40%] ml-auto mr-auto mt-2 px-6 ">
-        {taskList.map((item, idx) => (
+        {taskList?.map((item, idx) => (
           <ul key={idx} className="">
             <li className="py-2  shadow-lg bg-blue-300 px-4 rounded-sm mb-2 flex justify-between">
               <div className={item.status ? "line-through flex" : "flex"}>
@@ -97,7 +80,7 @@ function App() {
                 <button
                   className="border-1 px-2 py-1 bg-red-500 text-white rounded-lg ml-2 hover:cursor-pointer invisible group-hover:visible"
                   onClick={() => {
-                    deleteTask(idx);
+                    deleteTaskfun(idx);
                   }}
                 >
                   Remove
