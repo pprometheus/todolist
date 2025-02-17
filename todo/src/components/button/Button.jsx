@@ -11,7 +11,7 @@ const variantMap = {
 const Button = ({ children, variant = "default", onClick, disabled = false, ...props }) => {
   // Checking for invalid props
   if (Object.keys(props).length > 0 && !["variant", "onClick", "disabled"].includes(Object.keys(props)[0])) {
-    throw new Error("Invalid prop passed to Button component");
+    // throw new Error("Invalid prop passed to Button component");
   }
 
   const classes = variantMap[variant] || variantMap.default;
