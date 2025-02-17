@@ -107,7 +107,6 @@ function App() {
         ))}
       </Card>
     </div>
-      
     </>
   );
 }
