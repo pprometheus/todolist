@@ -4,15 +4,19 @@ import Input from "../src/components/input/Input";
 import Card from "../src/components/card/Card";
 import Header from "../src/components/header/Header";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, deleteTask, toggleTaskStatus } from "./redux/actions/action";
+import {
+  ADD_TASK_SAGA,
+  DELETE_TASK_SAGA,
+  TOGGLE_TASK_STATUS_SAGA,
+} from "./redux/actions/action";
 
 function App() {
   const [task, setTask] = useState("");
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   function addTaskfun() {
     if (task != "") {
-      dispatch(addTask(task));
+      dispatch({ type: ADD_TASK_SAGA, payload: task });
       setTask("");
     }
   }
@@ -22,13 +26,13 @@ function App() {
   }
 
   function deleteTaskfun(taskid) {
-    dispatch(deleteTask(taskid))
+    dispatch({ type: DELETE_TASK_SAGA, payload: taskid });
   }
 
   function doneTask(taskid) {
-    dispatch(toggleTaskStatus(taskid));
+    dispatch({ type: TOGGLE_TASK_STATUS_SAGA, payload: taskid });
   }
-  const taskList=useSelector((state)=>state?.tasks?.taskList);
+  const taskList = useSelector((state) => state?.task?.taskList);
 
   return (
     <>
@@ -40,13 +44,13 @@ function App() {
           onChange={handleChange}
           className={"border-1 p-2"}
         />
-        <Button variant="add" onClick={addTaskfun} children="Add"/>
+        <Button variant="add" onClick={addTaskfun} children="Add" />
       </div>
       <div className="flex justify-center items-center mt-4">
         <ul>
-          {taskList.map((item, idx) => (
+          {taskList?.map((item, idx) => (
             <Card
-              key={idx}  //not defined in props but required by our map() to map
+              key={idx} //not defined in props but required by our map() to map
               todoText={item.taskName}
               status={item.status}
               taskId={idx}
