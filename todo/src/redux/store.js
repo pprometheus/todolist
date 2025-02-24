@@ -1,15 +1,26 @@
-import {configureStore}  from "@reduxjs/toolkit"
+import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import rootReducer from "./rootReducer";
-import rootSaga from "./rootSaga";
+import { createInjectorsEnhancer } from "redux-injectors";
+import { combineReducers } from "redux";
 
-const sagaMiddleware=createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware();
 
-const store=configureStore({
-    reducer:rootReducer,
-    middleware:(getDefaultMiddleware)=>getDefaultMiddleware().concat(sagaMiddleware)
+const createReducer = (injectedReducers = {}) => {
+  return combineReducers({
+    ...injectedReducers,
+  });
+};
+
+const store = configureStore({
+  reducer: createReducer(), 
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
+  enhancers: (getDefaultEnhancers) => [
+    ...getDefaultEnhancers(),
+    createInjectorsEnhancer({
+      createReducer,
+      runSaga: sagaMiddleware.run,
+    }),
+  ],
 });
-
-sagaMiddleware.run(rootSaga);
 
 export default store;
