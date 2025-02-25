@@ -9,18 +9,28 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "server": "json-server --watch src/db/todos.json --port 3001",
+    "start": "concurrently \"npm run server\" \"npm run dev\""
   },
   "jest": {
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
-       "<rootDir>/src/setupTests.js"
+      "<rootDir>/src/setupTests.js"
     ]
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.5.1",
     "@tailwindcss/vite": "^4.0.6",
+    "immer": "^10.1.1",
+    "lodash": "^4.17.21",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
+    "redux": "^5.0.1",
+    "redux-saga": "^1.3.0",
+    "reselect": "^5.1.1",
+    "saga": "^4.0.0-alpha",
     "tailwindcss": "^4.0.6"
   },
   "devDependencies": {

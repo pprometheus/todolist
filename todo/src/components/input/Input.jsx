@@ -2,7 +2,8 @@ import React from "react";
 
 const variantMap = {
   primary: {
-    normal: "border border-blue-500 p-2 rounded-sm",
+    normal: "border border-black-500 p-2 rounded-sm w-70",
+    normal_r: "border border-blue-500 p-2 rounded-sm w-70",
     focus: "focus:border-blue-700 focus:outline-none",
     disabled: "bg-gray-200 cursor-not-allowed",
   },
